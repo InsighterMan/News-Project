@@ -29,13 +29,14 @@
 
 ## 📂 项目结构概览
 
+```text
 toutiao_backend/
 │
 ├── main.py              # 程序主入口（挂载路由、CORS、异常处理与启动配置）
 ├── config/              # 配置文件与数据库连接池
 ├── models/              # SQLAlchemy 数据库模型定义
 ├── schemas/             # Pydantic 数据校验与传输模型
-├── routers/             # 路由控制层
+├── routers/             # 路由层
 │   ├── news_rou.py      # 新闻资讯相关路由
 │   ├── users_rou.py     # 用户认证与信息路由
 │   ├── favorite_rou.py  # 收藏功能路由
