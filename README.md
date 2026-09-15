@@ -29,7 +29,7 @@
 
 ## 📂 项目结构概览
 
-```text
+```
 toutiao_backend/
 │
 ├── main.py              # 程序主入口（挂载路由、CORS、异常处理与启动配置）
@@ -43,6 +43,7 @@ toutiao_backend/
 │   └── history_rou.py   # 浏览历史路由
 ├── utils/               # 工具类（异常处理、JWT工具、密码加密等）
 └── requirements.txt     # 项目依赖包列表
+```
 
 ---
 
