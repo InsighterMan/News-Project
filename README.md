@@ -61,7 +61,7 @@ toutiao_backend/
 * 首页新闻实现板块
 
 <img width="1910" height="980" alt="image" src="https://github.com/user-attachments/assets/5bac18b1-66b4-43fb-8630-7e147ef68add" />
-<img width="1909" height="980" alt="image" src="https://github.com/user-attachments/assets/e3c2ab32-cdf0-4edd-80f0-0518794a7371" />
+<img width="1914" height="978" alt="image" src="https://github.com/user-attachments/assets/5e3305ee-32b7-48e1-9e71-68b3d6ff4015" />
 <img width="1919" height="979" alt="image" src="https://github.com/user-attachments/assets/a4e48814-b1ae-49d9-a0d9-f00e2b8bcab1" />
 
 
