@@ -57,10 +57,14 @@ toutiao_backend/
 ## 🖼️ 项目预览
 
 * 首页新闻实现板块
+
 <img width="1910" height="980" alt="image" src="https://github.com/user-attachments/assets/5bac18b1-66b4-43fb-8630-7e147ef68add" />
 <img width="1909" height="980" alt="image" src="https://github.com/user-attachments/assets/e3c2ab32-cdf0-4edd-80f0-0518794a7371" />
+<img width="1919" height="979" alt="image" src="https://github.com/user-attachments/assets/a4e48814-b1ae-49d9-a0d9-f00e2b8bcab1" />
+
 
 * AI对话功能实现板块
+
 <img width="389" height="840" alt="99273b23cce2e91cab3dcef7f21f5afb" src="https://github.com/user-attachments/assets/87b4a53a-5033-492b-b978-8556b7a37efa" />
 
 * 个人主页实现板块
