@@ -1,76 +1,199 @@
-# 🚀 FastAPI News Backend Project
+# LIVE NEWS · 本地 AI 新闻资讯平台
 
-基于 FastAPI + SQLAlchemy + Pydantic + MySQL + Agent 开发的高性能新闻资讯系统后端。项目实现了用户认证、JWT 令牌管理、新闻分类检索、文章收藏、浏览历史记录等核心功能，为个人后端开发项目，实现代码仅展示后端而非全栈。
+> 一个面向求职展示的全栈新闻资讯项目：提供实时资讯流、新闻检索、收藏/点赞/历史记录、个人中心、多主题与中英文切换，并接入本地运行的 DeepSeek-R1 7B 实现登录后 AI 问答。
 
----
+![Vue 3](https://img.shields.io/badge/Vue-3-42b883?logo=vuedotjs&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-009688?logo=fastapi&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql&logoColor=white)
+![Ollama](https://img.shields.io/badge/Ollama-Local%20LLM-111111)
 
-## 🛠️ 技术栈
+## 项目简介
 
-* 核心框架: FastAPI (Python 3.11+)
-* 异步/服务器: Uvicorn
-* 数据库/ORM: MySQL, SQLAlchemy
-* 数据校验: Pydantic
-* 权限管理: JWT (JSON Web Token)
-* AI对话：千问大模型, 百炼Agent
+LIVE NEWS 是一个以“阅读、沉淀、问答”为核心流程的新闻应用。项目不只实现资讯展示，还围绕真实使用场景补全了用户状态、内容交互、个性化外观与本地 AI 能力：
 
----
+- 读者可以按频道浏览实时资讯并进入详情页；
+- 可通过关键词检索当前资讯流；
+- 登录后可收藏、点赞、查看历史记录和维护个人资料；
+- 可以在四种玻璃拟态主题与中英文界面之间切换；
+- AI 问答通过后端连接本机 Ollama 的 DeepSeek-R1 7B，不向第三方云模型发送对话内容。
 
-## ✨ 核心功能模块
+该项目适合作为前端、全栈或 AI 应用开发方向的作品集项目，重点体现了 UI 一致性、前后端接口设计、认证保护以及本地大模型接入能力。
 
-* 用户系统: 支持用户注册、登录、JWT 身份认证及个人信息管理。
-* 新闻资讯: 支持多分类新闻浏览、查看量统计、详情页及关键词搜索。
-* 个性化互动:
-  * 文章收藏: 用户可对感兴趣的新闻进行收藏与取消收藏管理。
-  * 浏览历史: 自动记录用户的文章浏览轨迹，支持历史足迹查询。
-* 静态与动态资源: 集成静态文件托管与动态图床适配，确保前端页面资源平稳加载。
-* AI对话：借助千问大模型的agent百炼实现AI chat功能。（该功能仅做展示，具体实现代码封装在前端）
+## 核心功能
 
----
+| 模块 | 已实现能力 |
+| --- | --- |
+| 实时资讯 | 分类资讯流、资讯详情、来源跳转、去重、数据源异常兜底、SSE 实时流接口 |
+| 搜索 | 首页搜索栏按关键词筛选当前资讯流；收起搜索栏后自动清除关键词 |
+| 内容交互 | 登录后收藏、点赞、浏览历史；未登录操作会引导至登录/注册 |
+| 用户系统 | 注册、登录、Token 鉴权、个人资料、头像、简介、密码修改 |
+| 个人中心 | 收藏、点赞与历史记录的统计、空状态和快捷跳转 |
+| 主题与语言 | 四套可切换主题变量、全局玻璃拟态视觉、中英文页面文案 |
+| 本地 AI | 受登录保护的 AI 对话接口，后端调用 Ollama `deepseek-r1:7b`，支持上下文与中英文系统提示词 |
 
-## 📂 项目结构概览
+## 技术架构
 
+```text
+┌─────────────────────────────────────────────────────────────┐
+│ Vue 3 + Vite + Pinia + Vue Router + Vant                    │
+│ 资讯流 / 搜索 / 收藏点赞 / 主题语言 / AI Chat               │
+└────────────────────────┬────────────────────────────────────┘
+                         │ HTTP + Authorization Token
+┌────────────────────────▼────────────────────────────────────┐
+│ FastAPI                                                       │
+│ 用户、新闻、收藏、历史、实时资讯、AI 路由                    │
+└───────────────┬──────────────────────────┬──────────────────┘
+                │                          │
+        ┌───────▼────────┐        ┌────────▼──────────────┐
+        │ MySQL 8        │        │ Ollama (local)         │
+        │ 用户与业务数据 │        │ deepseek-r1:7b         │
+        └────────────────┘        └───────────────────────┘
 ```
-toutiao_backend/
-│
-├── main.py              # 程序主入口（挂载路由、CORS、异常处理与启动配置）
-├── config/              # 配置文件与数据库连接池
-├── models/              # SQLAlchemy 数据库模型定义
-├── schemas/             # Pydantic 数据校验与传输模型
-├── routers/             # 路由层
-│   ├── news_rou.py      # 新闻资讯相关路由
-│   ├── users_rou.py     # 用户认证与信息路由
-│   ├── favorite_rou.py  # 收藏功能路由
-│   └── history_rou.py   # 浏览历史路由
-├── utils/               # 工具类（异常处理、JWT工具、密码加密等）
-└── requirements.txt     # 项目依赖包列表
+
+### 技术选型
+
+- 前端：Vue 3、Vite、Pinia、Vue Router、Axios、Vant、vue-i18n
+- 后端：FastAPI、SQLAlchemy Async、Pydantic、Uvicorn
+- 数据库：MySQL 8（通过 `aiomysql` 异步访问）
+- 本地模型：Ollama + DeepSeek-R1 7B
+- 资讯服务：实时资讯路由会优先请求聚合源，异常或空结果时使用中国新闻网公开资讯作为回退来源
+
+## 本地 AI 设计
+
+AI 功能采用“浏览器 → 项目后端 → 本地 Ollama”的调用链：
+
+1. 前端不会直接访问 Ollama，避免将本地模型服务暴露给浏览器；
+2. `POST /api/ai/chat` 使用登录 Token 鉴权，未登录用户不能调用模型；
+3. 后端通过 `http://127.0.0.1:11434/api/chat` 请求 `deepseek-r1:7b`；
+4. 根据当前界面语言注入中文或英文系统提示词；
+5. 前端仅展示最终回答，不展示模型内部推理内容。
+
+由于模型在本机运行，正常使用不会产生按 Token 或调用次数计算的云端模型费用；成本仅为本机电力、硬件资源和已有网络流量。
+
+## 目录结构
+
+```text
+News Project/
+├── toutiao_frontend/
+│   └── frontend_code/
+│       ├── src/
+│       │   ├── components/      # 底部导航、资讯列表等复用组件
+│       │   ├── config/          # 后端与 AI 接口地址
+│       │   ├── router/          # 前端路由
+│       │   ├── store/           # 用户、主题、资讯等状态
+│       │   ├── utils/           # 文案与资讯翻译工具
+│       │   └── views/           # 页面级组件
+│       └── package.json
+├── toutiao_backend/
+│   ├── routers/                 # 用户、新闻、收藏、历史、实时资讯、AI 路由
+│   ├── crud/                    # 数据访问层
+│   ├── models/                  # SQLAlchemy 数据模型
+│   ├── schemas/                 # Pydantic 请求/响应模型
+│   ├── services/                # 资讯抓取服务
+│   ├── utils/                   # 鉴权、响应与异常处理
+│   └── main.py
+└── README.md
 ```
 
----
+## 快速开始
 
-## 📖 API 接口文档
+### 1. 环境要求
 
-项目启动后，你可以直接访问以下内置的交互式接口文档进行测试：
-* Swagger UI: http://127.0.0.1:8000/docs
-* ReDoc: http://127.0.0.1:8000/redoc
-* Agent：填写对应的api key实现AI对话功能
+- Node.js 18+
+- Python 3.11+
+- MySQL 8+
+- [Ollama](https://ollama.com/)（若需使用 AI 问答）
 
----
+### 2. 准备数据库
 
-## 🖼️ 项目预览
+创建 MySQL 数据库并导入本项目对应的数据表结构与初始数据。随后按本地环境修改：
 
-* 首页新闻实现板块
+```python
+# toutiao_backend/config/db_conf.py
+ASYNC_DATABASE_URI = "mysql+aiomysql://<user>:<password>@127.0.0.1:3306/<database>?charset=utf8mb4"
+```
 
-<img width="1910" height="980" alt="image" src="https://github.com/user-attachments/assets/5bac18b1-66b4-43fb-8630-7e147ef68add" />
-<img width="1914" height="978" alt="image" src="https://github.com/user-attachments/assets/5e3305ee-32b7-48e1-9e71-68b3d6ff4015" />
-<img width="1919" height="979" alt="image" src="https://github.com/user-attachments/assets/a4e48814-b1ae-49d9-a0d9-f00e2b8bcab1" />
+> 建议在实际部署中使用环境变量管理数据库连接，而不要把密码提交至仓库。
 
+### 3. 启动后端
 
-* AI对话功能实现板块
+```bash
+cd toutiao_backend
 
-<img width="389" height="840" alt="99273b23cce2e91cab3dcef7f21f5afb" src="https://github.com/user-attachments/assets/87b4a53a-5033-492b-b978-8556b7a37efa" />
+# 建议使用虚拟环境
+python -m venv .venv
+.venv\Scripts\activate          # Windows PowerShell
+# source .venv/bin/activate       # macOS / Linux
 
-* 个人主页实现板块
-<img width="1913" height="979" alt="image" src="https://github.com/user-attachments/assets/ba803457-cb98-4d80-ab45-8dda71f83d0d" />
+pip install fastapi "uvicorn[standard]" sqlalchemy aiomysql passlib[bcrypt]
+python main.py
+```
 
----
+后端默认地址：`http://127.0.0.1:8000`  
+接口文档：`http://127.0.0.1:8000/docs`
 
+### 4. 启动本地模型（可选）
+
+```bash
+ollama pull deepseek-r1:7b
+ollama serve
+```
+
+默认模型服务地址为 `http://127.0.0.1:11434`。可以通过环境变量覆盖模型配置：
+
+```bash
+# Windows PowerShell 示例
+$env:OLLAMA_MODEL = "deepseek-r1:7b"
+$env:OLLAMA_CHAT_URL = "http://127.0.0.1:11434/api/chat"
+```
+
+### 5. 启动前端
+
+```bash
+cd toutiao_frontend/frontend_code
+npm install
+npm run dev
+```
+
+浏览器访问 Vite 控制台输出的地址（通常为 `http://127.0.0.1:5173`）。
+
+### 6. 生产构建
+
+```bash
+cd toutiao_frontend/frontend_code
+npm run build
+```
+
+## 关键接口
+
+| 方法 | 路径 | 说明 |
+| --- | --- | --- |
+| `POST` | `/api/user/register` | 用户注册 |
+| `POST` | `/api/user/login` | 用户登录并获取 Token |
+| `GET` | `/api/live/news` | 获取实时资讯流，支持分类和关键词 |
+| `GET` | `/api/live/stream` | 实时资讯 SSE 流 |
+| `POST` | `/api/favorite/add` | 收藏资讯（需登录） |
+| `GET` | `/api/history/list` | 获取浏览历史（需登录） |
+| `POST` | `/api/ai/chat` | 调用本地 DeepSeek AI（需登录） |
+
+## 求职展示建议
+
+演示项目时，可以按下面的路径说明设计与工程能力：
+
+1. 从首页切换频道、搜索资讯并打开详情，展示资讯流与页面状态管理；
+2. 切换主题和中英文，说明全局设计令牌与国际化处理；
+3. 登录后完成收藏、点赞和历史记录，说明 Token 鉴权与前后端业务闭环；
+4. 进入 AI 问答，说明本地模型接入、后端代理、上下文控制与隐私边界；
+5. 打开 `/docs`，展示 FastAPI 自动生成的接口文档。
+
+## 后续可扩展方向
+
+- 使用 Redis 缓存热点资讯和模型回答，降低重复请求；
+- 为 AI 对话增加流式输出、会话持久化与引用新闻上下文；
+- 引入数据库迁移工具（如 Alembic）和依赖清单（`requirements.txt`）；
+- 为前后端增加单元测试、接口测试和端到端测试；
+- 使用环境变量、反向代理和 HTTPS 完善部署安全性。
+
+## 说明
+
+本项目用于学习、作品集展示与本地开发。资讯内容以原始新闻来源为准；AI 回答仅作辅助参考，不应替代对新闻原始报道的核验。
