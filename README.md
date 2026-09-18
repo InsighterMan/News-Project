@@ -21,15 +21,25 @@ LIVE NEWS 是一个以“阅读、沉淀、问答”为核心流程的新闻应�
 
 ## 项目展示
 - **首页模块**
+
 <img width="1897" height="979" alt="image" src="https://github.com/user-attachments/assets/7b1b6728-8351-4e9f-be5f-db7f2d37b408" />
+
 - **新闻详情**
+
 <img width="1898" height="974" alt="image" src="https://github.com/user-attachments/assets/62bf72a9-baa4-42c2-9d85-c7132b32d623" />
+
 - **搜索功能**
+
 <img width="1900" height="974" alt="image" src="https://github.com/user-attachments/assets/35627db7-4c3c-4804-b376-1974337120ff" />
+
 - **AI对话模块**
+
 <img width="1899" height="975" alt="image" src="https://github.com/user-attachments/assets/616b934f-3113-47c5-9711-ae6d80ea0ee9" />
+
 - **"我的"模块**
+
 <img width="1911" height="978" alt="image" src="https://github.com/user-attachments/assets/a5109205-7c31-49e2-9303-725ebb631312" />
+
 
 ## 核心功能
 
