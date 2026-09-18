@@ -1,6 +1,6 @@
 # LIVE NEWS · 本地 AI 新闻资讯平台
 
-> 一个面向求职展示的全栈新闻资讯项目：提供实时资讯流、新闻检索、收藏/点赞/历史记录、个人中心、多主题与中英文切换，并接入本地运行的 DeepSeek-R1 7B 实现登录后 AI 问答。
+> 一个全栈新闻资讯项目：提供实时资讯流、新闻检索、收藏/点赞/历史记录、个人中心、多主题与中英文切换，并接入本地运行的 DeepSeek-R1 7B 实现登录后 AI 问答。
 
 ![Vue 3](https://img.shields.io/badge/Vue-3-42b883?logo=vuedotjs&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-009688?logo=fastapi&logoColor=white)
